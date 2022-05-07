@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/player.png" type="Texture" id=1]
+[ext_resource path="res://entity/PlayerController.gd" type="Script" id=2]
+
+[node name="PlayerController" type="KinematicBody2D"]
+scale = Vector2( 1.5, 1.5 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( -27.0206, -63.5766 )
+polygon = PoolVector2Array( 27.1647, 31.5237, 37.2182, 38.4025, 40.1284, 49.7789, 35.6308, 63.8009, 30.8686, 67.7694, 42.5095, 68.2986, 42.7741, 73.5899, 34.5725, 74.9127, 40.9221, 96.0781, 13.4072, 96.3427, 13.9363, 88.9348, 13.6717, 81.5269, 18.6985, 77.0293, 13.1426, 74.119, 8.38039, 72.2671, 9.9678, 68.034, 17.1111, 67.7694, 9.43866, 53.7474, 10.7615, 44.7521, 6.79299, 43.4292, 9.1741, 34.1694 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 1.2, 1.2 )
+smoothing_enabled = true
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
