@@ -10,7 +10,7 @@ var loaded_chunks = {}
 
 var biome_scale = 0.2;
 var area_scale = 0.3;
-		
+
 func _ready():
 	biome_noise.seed = randi()
 	biome_noise.period = 1
@@ -85,26 +85,29 @@ func load_chunk(chunk_x: int, chunk_y: int):
 			var an = area_quad[0] * d[0] + area_quad[1] * d[1] + area_quad[2] * d[2] + area_quad[3] * d[3] + area_quad[4] * d[4]
 			an /= d[0] + d[1] + d[2] + d[3] + d[4]
 			an = clamp(an, 0, 1)
-			
-			var b = block.GRASS
+
+			var bd = BlockData.new()
+			var m = block.GRASS
 			if an < 0.4:
 				if bn < 0.5:
-					b = block.GRASS
+					m = block.GRASS
 				elif bn < 0.7:
-					b = block.SAND
+					m = block.SAND
 				else:
-					b = block.WATER
+					m = block.WATER
 			elif (an < 0.5) and (bn > 0.4):
-				b = block.WALL
+				m = block.WALL
 			else:
+				bd.in_cave = true
 				if bn < 0.5:
-					b = block.STONE
+					m = block.STONE
 				elif (abs(an - 0.7) < 0.1) and (bn < 0.6):
-					b = block.LAVA
+					m = block.LAVA
 				else:
-					b = block.DIRT
+					m = block.DIRT
 
-			data[i].append(b)
+			bd.material = m
+			data[i].append(bd)
 
 	loaded_chunks[pos] = data
 	call_deferred("_update_data", chunk_x, chunk_y, data)
@@ -114,7 +117,7 @@ func _update_data(chunk_x: int, chunk_y: int, data):
 		for j in 16:
 			var x = (chunk_x << 4) + i
 			var y = (chunk_y << 4) + j
-			set_cell(x, y, data[i][j])
+			set_cell(x, y, data[i][j].material)
 	update_bitmask_region()
 
 ##################################################################
@@ -146,13 +149,14 @@ func clean_up_chunks(data: Dictionary):
 			continue
 		to_deleted.append(s)
 	for s in to_deleted:
-		loaded_chunks.erase(s)
 		var pos = s as Vector2
 		for i in 16:
 			for j in 16:
 				var x = ((pos.x as int) << 4) + i
 				var y = ((pos.y as int) << 4) + j
 				set_cell(x, y, -1)
+				
+		loaded_chunks.erase(s)
 	update_bitmask_region()
 
 func _on_ChunkCleaner_timeout():
