@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 func _physics_process(delta):
-	var speed = 500
+	var speed = 1000
 	var velocity = Vector2()
 
 	if $"/root/Player".spot_block != null:
@@ -10,9 +10,16 @@ func _physics_process(delta):
 		if m == blocks.SAND:
 			speed *= 0.8
 		elif m == blocks.WATER:
-			speed *= 0.6
-		elif m == blocks.LAVA:
 			speed *= 0.4
+		elif m == blocks.LAVA:
+			speed *= 0.3
+		
+		if $"/root/Player".spot_block.in_cave:
+			$"../Ambient".color = Color(0.3, 0.3, 0.3);
+			$Flashlight.visible = true;
+		else:
+			$"../Ambient".color = Color(1.0, 1.0, 1.0);
+			$Flashlight.visible = false;
 
 	if Input.is_action_pressed("ui_left"):
 		velocity.x = -speed
