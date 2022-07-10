@@ -27,6 +27,12 @@ func _ready():
 	var thread = Thread.new()
 	thread.start(self, "_world_rendering", "")
 
+func _process(delta):
+	var mt5 = tile_set.tile_get_material(5);
+	mt5.set_shader_param("global_transform", get_global_transform())
+	var mt6 = tile_set.tile_get_material(6);
+	mt6.set_shader_param("global_transform", get_global_transform())
+
 func _reversed_dist(i: float, j: float, a: float, b: float, d: float):
 	return 1.0 - (sqrt((pow(i - a, 2) + pow(j - b, 2)) / (2 * pow(d, 2))))
 
