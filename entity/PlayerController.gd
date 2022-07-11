@@ -1,7 +1,11 @@
 extends KinematicBody2D
 
+var last_movement = 0;
+var tracking_running = false;
+var tracking_running_start = 0;
+
 func _physics_process(delta):
-	var speed = 1000
+	var speed = 300
 	var velocity = Vector2()
 
 	if $"/root/Player".spot_block != null:
@@ -34,6 +38,21 @@ func _physics_process(delta):
 		velocity.y = -speed
 	if Input.is_action_pressed("ui_down"):
 		velocity.y = speed
+
+	var now = OS.get_ticks_msec()
+	var elapsed = now - last_movement
+	if velocity.length() > 0:
+		$AnimatedSprite.play("walking");
+		if !tracking_running:
+			tracking_running = true
+			tracking_running_start = now
+		elif now - tracking_running_start > 1000:
+			velocity.x = velocity.x * 1.5;
+			velocity.y = velocity.y * 1.5;
+		last_movement = now
+	else:
+		$AnimatedSprite.play("default");
+		tracking_running = false
 
 	move_and_slide(velocity, Vector2(0, 0))
 	$"/root/Player".position = position
