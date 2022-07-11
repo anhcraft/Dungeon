@@ -1,24 +1,52 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://assets/player.png" type="Texture" id=1]
 [ext_resource path="res://entity/PlayerController.gd" type="Script" id=2]
 [ext_resource path="res://assets/spot.png" type="Texture" id=3]
+[ext_resource path="res://assets/player/idle/Idle (9).png" type="Texture" id=4]
+[ext_resource path="res://assets/player/idle/Idle (8).png" type="Texture" id=5]
+[ext_resource path="res://assets/player/idle/Idle (2).png" type="Texture" id=6]
+[ext_resource path="res://assets/player/idle/Idle (7).png" type="Texture" id=7]
+[ext_resource path="res://assets/player/idle/Idle (4).png" type="Texture" id=8]
+[ext_resource path="res://assets/player/idle/Idle (5).png" type="Texture" id=9]
+[ext_resource path="res://assets/player/idle/Idle (10).png" type="Texture" id=10]
+[ext_resource path="res://assets/player/idle/Idle (1).png" type="Texture" id=11]
+[ext_resource path="res://assets/player/idle/Idle (6).png" type="Texture" id=12]
+[ext_resource path="res://assets/player/idle/Idle (3).png" type="Texture" id=13]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 13 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="OccluderPolygon2D" id=2]
+cull_mode = 2
+polygon = PoolVector2Array( 31.3333, 26.6667, 43.3333, 44, 35.3333, 70, 42, 101.333, 5.99997, 102, -0.666698, 41.3333, 31.3333, 26.6667 )
 
 [node name="PlayerController" type="KinematicBody2D"]
 scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 2 )
 
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.5, 0.6 )
+frames = SubResource( 1 )
+frame = 1
+playing = true
+
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( -27.0206, -63.5766 )
-polygon = PoolVector2Array( 27.1647, 31.5237, 37.2182, 38.4025, 40.1284, 49.7789, 35.6308, 63.8009, 30.8686, 67.7694, 42.5095, 68.2986, 42.7741, 73.5899, 34.5725, 74.9127, 40.9221, 96.0781, 13.4072, 96.3427, 13.9363, 88.9348, 13.6717, 81.5269, 18.6985, 77.0293, 13.1426, 74.119, 8.38039, 72.2671, 9.9678, 68.034, 17.1111, 67.7694, 9.43866, 53.7474, 10.7615, 44.7521, 6.79299, 43.4292, 9.1741, 34.1694 )
+position = Vector2( 13.3333, 10.6667 )
+polygon = PoolVector2Array( -15.3333, -49.3333, -0.666667, -28, 0, 27.3333, -36, 28, -36.6667, -34 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2( -27.3333, -64 )
+occluder = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 1.2, 1.2 )
 smoothing_enabled = true
-
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 1 )
 
 [node name="Flashlight" type="Light2D" parent="."]
 texture = ExtResource( 3 )
