@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://entity/PlayerController.gd" type="Script" id=2]
 [ext_resource path="res://assets/spot.png" type="Texture" id=3]
@@ -12,6 +12,22 @@
 [ext_resource path="res://assets/player/idle/Idle (1).png" type="Texture" id=11]
 [ext_resource path="res://assets/player/idle/Idle (6).png" type="Texture" id=12]
 [ext_resource path="res://assets/player/idle/Idle (3).png" type="Texture" id=13]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform bool in_liquid;
+
+void fragment(){
+	COLOR = texture(TEXTURE, UV);
+	if(in_liquid && UV.y > 0.8) {
+		COLOR = vec4(1.0, 1.0, 1.0, 0.0);
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/in_liquid = null
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -30,6 +46,7 @@ scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 4 )
 scale = Vector2( 0.5, 0.6 )
 frames = SubResource( 1 )
 frame = 1

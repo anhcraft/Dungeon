@@ -7,13 +7,16 @@ func _physics_process(delta):
 	if $"/root/Player".spot_block != null:
 		var blocks = $"/root/Blocks"
 		var m = $"/root/Player".spot_block.material
+		$AnimatedSprite.material.set_shader_param("in_liquid", false)
 		if m == blocks.SAND:
 			speed *= 0.8
 		elif m == blocks.WATER:
 			speed *= 0.4
+			$AnimatedSprite.material.set_shader_param("in_liquid", true)
 		elif m == blocks.LAVA:
 			speed *= 0.3
-		
+			$AnimatedSprite.material.set_shader_param("in_liquid", true)
+
 		if $"/root/Player".spot_block.in_cave:
 			$"../Ambient".color = Color(0.3, 0.3, 0.3);
 			$Flashlight.visible = true;
