@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://assets/player/running/Run (5).png" type="Texture" id=1]
 [ext_resource path="res://entity/PlayerController.gd" type="Script" id=2]
@@ -20,6 +20,16 @@
 [ext_resource path="res://assets/player/running/Run (6).png" type="Texture" id=18]
 [ext_resource path="res://assets/player/running/Run (7).png" type="Texture" id=19]
 [ext_resource path="res://assets/player/running/Run (8).png" type="Texture" id=20]
+[ext_resource path="res://assets/player/jump/Jump (5).png" type="Texture" id=21]
+[ext_resource path="res://assets/player/jump/Jump (7).png" type="Texture" id=22]
+[ext_resource path="res://assets/player/jump/Jump (8).png" type="Texture" id=23]
+[ext_resource path="res://assets/player/jump/Jump (10).png" type="Texture" id=24]
+[ext_resource path="res://assets/player/jump/Jump (3).png" type="Texture" id=25]
+[ext_resource path="res://assets/player/jump/Jump (2).png" type="Texture" id=26]
+[ext_resource path="res://assets/player/jump/Jump (9).png" type="Texture" id=27]
+[ext_resource path="res://assets/player/jump/Jump (1).png" type="Texture" id=28]
+[ext_resource path="res://assets/player/jump/Jump (4).png" type="Texture" id=29]
+[ext_resource path="res://assets/player/jump/Jump (6).png" type="Texture" id=30]
 
 [sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
@@ -48,6 +58,11 @@ animations = [ {
 "loop": true,
 "name": "walking",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 28 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 29 ), ExtResource( 21 ), ExtResource( 30 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 27 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
 } ]
 
 [sub_resource type="OccluderPolygon2D" id=2]
@@ -62,7 +77,7 @@ script = ExtResource( 2 )
 material = SubResource( 4 )
 scale = Vector2( 0.5, 0.6 )
 frames = SubResource( 1 )
-frame = 7
+frame = 8
 playing = true
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
