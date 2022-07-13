@@ -9,6 +9,9 @@ var jumping = false;
 var jump_start = 0;
 var direction = Vector2.RIGHT;
 
+func _ready():
+	$AnimatedSprite.playing = true
+
 func _physics_process(delta):
 	var speed = 300
 	var velocity = Vector2()
