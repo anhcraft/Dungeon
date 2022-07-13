@@ -1,12 +1,15 @@
 extends KinematicBody2D
 
 const jump_time = 1000;
+const slide_time = 500;
 
 var last_movement = 0;
 var tracking_running = false;
 var tracking_running_start = 0;
 var jumping = false;
 var jump_start = 0;
+var sliding = false;
+var slide_start = 0;
 var direction = Vector2.RIGHT;
 
 func _ready():
@@ -50,7 +53,11 @@ func _physics_process(delta):
 		velocity.y = -speed
 	if Input.is_action_pressed("ui_down"):
 		velocity.y = speed
-	if Input.is_action_pressed("ui_select") && !jumping:
+	if Input.is_action_pressed("player_slide") && !jumping && !sliding:
+		sliding = true
+		slide_start = now
+		$AnimatedSprite.play("slide")
+	if Input.is_action_pressed("ui_select") && !jumping && !sliding:
 		jumping = true
 		jump_start = now
 		$AnimatedSprite.play("jump")
@@ -66,6 +73,14 @@ func _physics_process(delta):
 			jump_start = now
 			$AnimatedSprite.play("default")
 
+	elif sliding:
+		var elapsed = now - slide_start
+		velocity = speed * direction * 3
+		if elapsed > slide_time:
+			sliding = false
+			slide_start = now
+			$AnimatedSprite.play("default")
+		
 	else:
 		var elapsed = now - last_movement
 		if velocity.length() > 0:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://assets/player/running/Run (5).png" type="Texture" id=1]
 [ext_resource path="res://entity/PlayerController.gd" type="Script" id=2]
@@ -30,6 +30,11 @@
 [ext_resource path="res://assets/player/jump/Jump (1).png" type="Texture" id=28]
 [ext_resource path="res://assets/player/jump/Jump (4).png" type="Texture" id=29]
 [ext_resource path="res://assets/player/jump/Jump (6).png" type="Texture" id=30]
+[ext_resource path="res://assets/player/slide/Slide (3).png" type="Texture" id=31]
+[ext_resource path="res://assets/player/slide/Slide (5).png" type="Texture" id=32]
+[ext_resource path="res://assets/player/slide/Slide (4).png" type="Texture" id=33]
+[ext_resource path="res://assets/player/slide/Slide (2).png" type="Texture" id=34]
+[ext_resource path="res://assets/player/slide/Slide (1).png" type="Texture" id=35]
 
 [sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
@@ -49,6 +54,11 @@ shader_param/in_liquid = null
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 35 ), ExtResource( 34 ), ExtResource( 31 ), ExtResource( 33 ), ExtResource( 32 ) ],
+"loop": true,
+"name": "slide",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 13 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "default",
