@@ -13,7 +13,7 @@ func _ready():
 	$AnimatedSprite.playing = true
 
 func _physics_process(delta):
-	var speed = 300
+	var speed = 200
 	var velocity = Vector2()
 
 	if $"/root/Player".spot_block != null:
@@ -74,8 +74,8 @@ func _physics_process(delta):
 				tracking_running = true
 				tracking_running_start = now
 			elif now - tracking_running_start > 1000:
-				velocity.x = velocity.x * 1.5;
-				velocity.y = velocity.y * 1.5;
+				velocity.x = velocity.x * 2;
+				velocity.y = velocity.y * 2;
 			last_movement = now
 		else:
 			$AnimatedSprite.play("default");
