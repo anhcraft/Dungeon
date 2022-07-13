@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const jump_time = 1000;
+const jump_time = 600;
 const slide_time = 500;
 
 var last_movement = 0;
@@ -65,7 +65,7 @@ func _physics_process(delta):
 	if jumping:
 		var elapsed = now - jump_start
 		var x = elapsed/(jump_time * 0.5) - 1
-		velocity.y = speed * x * x * x
+		velocity.y = speed * x * x * x * 5
 		z_index = 1 # avoid collision
 		if elapsed > jump_time:
 			z_index = 0
