@@ -18,26 +18,26 @@ func _ready():
 func _physics_process(delta):
 	var speed = 200
 	var velocity = Vector2()
+	var b = $"/root/Player".spot_block
 
 	if $"/root/Player".spot_block != null:
 		var blocks = $"/root/Blocks"
-		var m = $"/root/Player".spot_block.material
-		$AnimatedSprite.material.set_shader_param("in_liquid", false)
+		var m = b.material
 		if m == blocks.SAND:
 			speed *= 0.8
 		elif m == blocks.WATER:
 			speed *= 0.4
-			$AnimatedSprite.material.set_shader_param("in_liquid", true)
 		elif m == blocks.LAVA:
 			speed *= 0.3
-			$AnimatedSprite.material.set_shader_param("in_liquid", true)
 
-		if $"/root/Player".spot_block.in_cave:
+		if b.in_cave:
 			$"../Ambient".color = Color(0.3, 0.3, 0.3);
 			$Flashlight.visible = true;
 		else:
 			$"../Ambient".color = Color(1.0, 1.0, 1.0);
 			$Flashlight.visible = false;
+
+		$AnimatedSprite.material.set_shader_param("in_liquid", b.is_liquid())
 
 	var now = OS.get_ticks_msec()
 
@@ -53,11 +53,11 @@ func _physics_process(delta):
 		velocity.y = -speed
 	if Input.is_action_pressed("ui_down"):
 		velocity.y = speed
-	if Input.is_action_pressed("player_slide") && !jumping && !sliding:
+	if Input.is_action_pressed("player_slide") && !jumping && !sliding && !b.is_liquid():
 		sliding = true
 		slide_start = now
 		$AnimatedSprite.play("slide")
-	if Input.is_action_pressed("ui_select") && !jumping && !sliding:
+	if Input.is_action_pressed("ui_select") && !jumping && !sliding && !b.is_liquid():
 		jumping = true
 		jump_start = now
 		$AnimatedSprite.play("jump")
@@ -67,7 +67,7 @@ func _physics_process(delta):
 		var x = elapsed/(jump_time * 0.5) - 1
 		velocity.y = speed * x * x * x * 5
 		z_index = 1 # avoid collision
-		if elapsed > jump_time:
+		if elapsed > jump_time || b.is_liquid():
 			z_index = 0
 			jumping = false
 			jump_start = now
@@ -76,7 +76,7 @@ func _physics_process(delta):
 	elif sliding:
 		var elapsed = now - slide_start
 		velocity = speed * direction * 3
-		if elapsed > slide_time:
+		if elapsed > slide_time || b.is_liquid():
 			sliding = false
 			slide_start = now
 			$AnimatedSprite.play("default")
