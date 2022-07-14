@@ -64,20 +64,19 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 14 ), ExtResource( 1 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ) ],
-"loop": true,
-"name": "walking",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 28 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 29 ), ExtResource( 21 ), ExtResource( 30 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 27 ), ExtResource( 24 ) ],
 "loop": true,
 "name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 14 ), ExtResource( 1 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ) ],
+"loop": true,
+"name": "walking",
 "speed": 5.0
 } ]
 
 [sub_resource type="OccluderPolygon2D" id=2]
 cull_mode = 2
-polygon = PoolVector2Array( 31.3333, 26.6667, 43.3333, 44, 35.3333, 70, 42, 101.333, 5.99997, 102, -0.666698, 41.3333, 31.3333, 26.6667 )
 
 [node name="PlayerController" type="KinematicBody2D"]
 scale = Vector2( 1.5, 1.5 )
@@ -89,11 +88,8 @@ scale = Vector2( 0.5, 0.6 )
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( 13.3333, 10.6667 )
-polygon = PoolVector2Array( -15.3333, -49.3333, -0.666667, -28, 0, 27.3333, -36, 28, -36.6667, -34 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-position = Vector2( -27.3333, -64 )
 occluder = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]

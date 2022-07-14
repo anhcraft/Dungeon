@@ -3,6 +3,23 @@ extends KinematicBody2D
 const jump_time = 600;
 const slide_time = 500;
 
+const default_shape = PoolVector2Array([
+	Vector2(-21.3333, 36),
+	Vector2(13.3333, 36),
+	Vector2(8, -21.3333),
+	Vector2(-19.3333, -23.3333)
+])
+
+const sliding_shape = PoolVector2Array([
+	Vector2(-33.3333, 38.6667),
+	Vector2(17.3333, 38.6667),
+	Vector2(14.6667, 26.6667),
+	Vector2(-4, 17.3333),
+	Vector2(-0.666667, 2),
+	Vector2(-24.6667, -2.66667),
+	Vector2(-39.3333, 19.3333)
+])
+
 var last_movement = 0;
 var tracking_running = false;
 var tracking_running_start = 0;
@@ -12,8 +29,21 @@ var sliding = false;
 var slide_start = 0;
 var direction = Vector2.RIGHT;
 
+func _set_shape(arr: PoolVector2Array):
+	$CollisionShape2D.polygon = arr
+	$LightOccluder2D.occluder.polygon = arr
+
+func _flip_shape():
+	if direction.x > 0:
+		$CollisionShape2D.scale.x = 1
+		$LightOccluder2D.scale.x = 1
+	else:
+		$CollisionShape2D.scale.x = -1
+		$LightOccluder2D.scale.x = -1
+
 func _ready():
 	$AnimatedSprite.playing = true
+	_set_shape(sliding_shape)
 
 func _physics_process(delta):
 	var speed = 200
@@ -45,10 +75,12 @@ func _physics_process(delta):
 		velocity.x = -speed
 		direction = Vector2.LEFT
 		$AnimatedSprite.flip_h = true
+		_flip_shape();
 	if Input.is_action_pressed("ui_right"):
 		velocity.x = speed
 		direction = Vector2.RIGHT
 		$AnimatedSprite.flip_h = false
+		_flip_shape();
 	if Input.is_action_pressed("ui_up"):
 		velocity.y = -speed
 	if Input.is_action_pressed("ui_down"):
@@ -57,6 +89,7 @@ func _physics_process(delta):
 		sliding = true
 		slide_start = now
 		$AnimatedSprite.play("slide")
+		_set_shape(sliding_shape)
 	if Input.is_action_pressed("ui_select") && !jumping && !sliding && !b.is_liquid():
 		jumping = true
 		jump_start = now
@@ -80,7 +113,8 @@ func _physics_process(delta):
 			sliding = false
 			slide_start = now
 			$AnimatedSprite.play("default")
-		
+			_set_shape(default_shape)
+
 	else:
 		var elapsed = now - last_movement
 		if velocity.length() > 0:
