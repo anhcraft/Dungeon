@@ -48,9 +48,15 @@ func _flip_shape():
 
 func _process(delta):
 	var b = $"/root/Player".spot_block
-	if b != null && b.material == $"/root/Blocks".LAVA:
-		$"/root/Player".drain_health(0.5)
-	elif $"/root/Player".get_energy_ratio() > 0.75:
+	if b != null:
+		if b.material == $"/root/Blocks".LAVA:
+			$"/root/Player".drain_health(0.5)
+			$FireAnimation.show()
+			$FireAnimation.play()
+		else:
+			$FireAnimation.stop()
+			$FireAnimation.hide()
+	if $"/root/Player".get_energy_ratio() > 0.75:
 		$"/root/Player".revive_health(0.1)
 
 func _physics_process(delta):

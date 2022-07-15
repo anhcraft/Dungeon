@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://assets/player/running/Run (5).png" type="Texture" id=1]
 [ext_resource path="res://entity/PlayerController.gd" type="Script" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://assets/player/slide/Slide (2).png" type="Texture" id=34]
 [ext_resource path="res://assets/player/slide/Slide (1).png" type="Texture" id=35]
 [ext_resource path="res://entity/HealthBar.gd" type="Script" id=36]
+[ext_resource path="res://assets/effect/flame_fire_smoke.png" type="Texture" id=37]
 
 [sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
@@ -79,6 +80,129 @@ animations = [ {
 [sub_resource type="OccluderPolygon2D" id=2]
 cull_mode = 2
 
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 384, 0, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 512, 0, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 640, 0, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 0, 126, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 128, 126, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 256, 126, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 384, 126, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 512, 126, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 640, 126, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 0, 252, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 128, 252, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 256, 252, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 384, 252, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 512, 252, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 640, 252, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 0, 378, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 128, 378, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 256, 378, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 384, 378, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 512, 378, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 640, 378, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 0, 504, 128, 126 )
+
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 37 )
+region = Rect2( 128, 504, 128, 126 )
+
+[sub_resource type="SpriteFrames" id=28]
+animations = [ {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
 [node name="PlayerController" type="KinematicBody2D"]
 scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 2 )
@@ -114,3 +238,9 @@ visible = false
 margin_right = 60.0
 margin_bottom = 3.0
 color = Color( 0.784314, 0.164706, 0.137255, 0.392157 )
+
+[node name="FireAnimation" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 28 )
+speed_scale = 2.0
+offset = Vector2( 0, -15 )
