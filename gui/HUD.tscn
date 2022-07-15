@@ -45,12 +45,14 @@ margin_bottom = 600.0
 color = Color( 1, 1, 1, 0 )
 
 [node name="EnergyBarBackground" type="ColorRect" parent="."]
+visible = false
 margin_top = 590.0
 margin_right = 300.0
 margin_bottom = 600.0
 color = Color( 1, 1, 1, 0.196078 )
 
 [node name="EnergyBar" type="ColorRect" parent="."]
+visible = false
 material = SubResource( 2 )
 margin_top = 590.0
 margin_right = 300.0

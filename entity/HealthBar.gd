@@ -12,7 +12,13 @@ func _process(delta):
 	target_ratio = $"/root/Player".get_health_ratio()
 	if abs(target_ratio - current_ratio) > 0.01:
 		current_ratio = clamp(current_ratio + (target_ratio - current_ratio) * 0.1, 0.0, 1.0)
-		rect_size.x = current_ratio * rect_max_size
+		if current_ratio > 0.98:
+			hide()
+			$"../HealthBarBackground".hide()
+		else:
+			show()
+			$"../HealthBarBackground".show()
+			rect_size.x = current_ratio * rect_max_size
 
 func relocate():
 	var arr = $"../CollisionShape2D".polygon
