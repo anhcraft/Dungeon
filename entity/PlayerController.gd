@@ -29,28 +29,35 @@ var sliding = false;
 var slide_start = 0;
 var direction = Vector2.RIGHT;
 
+func _ready():
+	$AnimatedSprite.playing = true
+	_set_shape(default_shape)
+
 func _set_shape(arr: PoolVector2Array):
 	$CollisionShape2D.polygon = arr
 	$LightOccluder2D.occluder.polygon = arr
+	$HealthBar.relocate()
 
 func _flip_shape():
 	if direction.x > 0:
 		$CollisionShape2D.scale.x = 1
-		$LightOccluder2D.scale.x = 1
 	else:
 		$CollisionShape2D.scale.x = -1
-		$LightOccluder2D.scale.x = -1
+	$LightOccluder2D.scale = $CollisionShape2D.scale
+	$HealthBar.relocate()
 
-func _ready():
-	$AnimatedSprite.playing = true
-	_set_shape(sliding_shape)
+func _process(delta):
+	var b = $"/root/Player".spot_block
+	if b != null && b.material == $"/root/Blocks".LAVA:
+		$"/root/Player".drain_health(0.5)
+	elif $"/root/Player".get_energy_ratio() > 0.75:
+		$"/root/Player".revive_health(0.1)
 
 func _physics_process(delta):
 	var speed = 200
 	var velocity = Vector2()
 	var b = $"/root/Player".spot_block
-
-	if $"/root/Player".spot_block != null:
+	if b != null:
 		var blocks = $"/root/Blocks"
 		var m = b.material
 		if m == blocks.SAND:

@@ -6,7 +6,7 @@ var current_ratio = 1.0;
 
 func _ready():
 	rect_max_size = $EnergyBar.rect_size.x
-	
+
 func _process(delta):
 	$Stats.text = str(Engine.get_frames_per_second()) + " fps | " + str($"/root/Player".position) + " | " + str($"../World".loaded_chunks.size()) + " loaded chunks"
 
@@ -21,3 +21,5 @@ func _process(delta):
 			$EnergyBar.show()
 			$EnergyBarBackground.show()
 			$EnergyBar.rect_size.x = current_ratio * rect_max_size
+
+	$HealthWarning.material.set_shader_param("bloody", $"/root/Player".get_health() < 20);
