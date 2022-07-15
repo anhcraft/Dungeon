@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://map/World.gd" type="Script" id=1]
 [ext_resource path="res://assets/sand.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://assets/water.png" type="Texture" id=6]
 [ext_resource path="res://assets/dirt.png" type="Texture" id=7]
 [ext_resource path="res://assets/stone.png" type="Texture" id=8]
+
+[sub_resource type="OccluderPolygon2D" id=12]
+polygon = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -264,6 +267,7 @@ shader_param/global_transform = null
 4/region = Rect2( 0, 0, 64, 64 )
 4/tile_mode = 0
 4/occluder_offset = Vector2( 0, 0 )
+4/occluder = SubResource( 12 )
 4/navigation_offset = Vector2( 0, 0 )
 4/shape_offset = Vector2( 0, 0 )
 4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
