@@ -85,12 +85,12 @@ func _physics_process(delta):
 		velocity.y = -speed
 	if Input.is_action_pressed("ui_down"):
 		velocity.y = speed
-	if Input.is_action_pressed("player_slide") && !jumping && !sliding && !b.is_liquid():
+	if Input.is_action_pressed("player_slide") && !jumping && !sliding && !b.is_liquid() && $"/root/Player".consume_energy(10.0):
 		sliding = true
 		slide_start = now
 		$AnimatedSprite.play("slide")
 		_set_shape(sliding_shape)
-	if Input.is_action_pressed("ui_select") && !jumping && !sliding && !b.is_liquid():
+	if Input.is_action_pressed("ui_select") && !jumping && !sliding && !b.is_liquid() && $"/root/Player".consume_energy(10.0):
 		jumping = true
 		jump_start = now
 		$AnimatedSprite.play("jump")
@@ -122,13 +122,14 @@ func _physics_process(delta):
 			if !tracking_running:
 				tracking_running = true
 				tracking_running_start = now
-			elif now - tracking_running_start > 1000:
+			elif now - tracking_running_start > 1000 && $"/root/Player".consume_energy(0.3):
 				velocity.x = velocity.x * 2;
 				velocity.y = velocity.y * 2;
 			last_movement = now
 		else:
 			$AnimatedSprite.play("default");
 			tracking_running = false
+			$"/root/Player".supply_energy(0.1)
 
 	move_and_slide(velocity, Vector2(0, 0))
 	$"/root/Player".position = position

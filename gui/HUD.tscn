@@ -1,6 +1,20 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://gui/HUD.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+void fragment(){
+	vec4 color1 = vec4(48.0, 200.0, 255.0, 255.0)/255.0;
+	vec4 color2 = vec4(135.0, 40.0, 224.0, 255.0)/255.0;
+	float dist = distance(UV, vec2((sin(TIME)+1.0)*0.5, 0.5));
+	COLOR = mix(color1, color2, dist);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -10,3 +24,15 @@ margin_left = 15.0
 margin_top = 10.0
 margin_right = 96.0
 margin_bottom = 24.0
+
+[node name="EnergyBarBackground" type="ColorRect" parent="."]
+margin_top = 590.0
+margin_right = 300.0
+margin_bottom = 600.0
+color = Color( 1, 1, 1, 0.196078 )
+
+[node name="EnergyBar" type="ColorRect" parent="."]
+material = SubResource( 2 )
+margin_top = 590.0
+margin_right = 300.0
+margin_bottom = 600.0
