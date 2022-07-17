@@ -35,10 +35,10 @@
 [ext_resource path="res://assets/player/slide/Slide (4).png" type="Texture" id=33]
 [ext_resource path="res://assets/player/slide/Slide (2).png" type="Texture" id=34]
 [ext_resource path="res://assets/player/slide/Slide (1).png" type="Texture" id=35]
-[ext_resource path="res://entity/HealthBar.gd" type="Script" id=36]
+[ext_resource path="res://gui/ProgressionBar.tscn" type="PackedScene" id=36]
 [ext_resource path="res://assets/effect/flame_fire_smoke.png" type="Texture" id=37]
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="Shader" id=29]
 code = "shader_type canvas_item;
 
 uniform bool in_liquid;
@@ -51,7 +51,7 @@ void fragment(){
 }"
 
 [sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
+shader = SubResource( 29 )
 shader_param/in_liquid = null
 
 [sub_resource type="SpriteFrames" id=1]
@@ -226,21 +226,10 @@ smoothing_enabled = true
 texture = ExtResource( 3 )
 texture_scale = 5.0
 
-[node name="HealthBar" type="ColorRect" parent="."]
-visible = false
-margin_right = 60.0
-margin_bottom = 3.0
-color = Color( 0.784314, 0.164706, 0.137255, 1 )
-script = ExtResource( 36 )
-
-[node name="HealthBarBackground" type="ColorRect" parent="."]
-visible = false
-margin_right = 60.0
-margin_bottom = 3.0
-color = Color( 0.784314, 0.164706, 0.137255, 0.392157 )
-
 [node name="FireAnimation" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 28 )
 speed_scale = 2.0
 offset = Vector2( 0, -15 )
+
+[node name="HealthBar" parent="." instance=ExtResource( 36 )]

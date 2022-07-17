@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://gui/ProgressionBar.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform vec4 overlay_color;
+uniform vec4 background_color;
+uniform float progress;
+
+void fragment() {
+	if(UV.x <= progress) COLOR = overlay_color;
+	else COLOR = background_color;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/overlay_color = null
+shader_param/background_color = null
+shader_param/progress = null
+
+[node name="ProgressionBar" type="ColorRect"]
+visible = false
+material = SubResource( 2 )
+margin_right = 50.0
+margin_bottom = 2.0
+script = ExtResource( 1 )
