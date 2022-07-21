@@ -30,36 +30,13 @@ var slide_start = 0;
 var direction = Vector2.RIGHT;
 
 func _ready():
-	var healthBarColor = Color.red
-	$HealthBar.set_overlay_color(healthBarColor.lightened(0.1))
-	healthBarColor.a = 0.4
-	$HealthBar.set_background_color(healthBarColor)
-
 	$AnimatedSprite.playing = true
 	_set_shape(default_shape)
-
-func _relocate_health_bar():
-	var arr = $CollisionShape2D.polygon
-	var top = arr[0].y
-	var left = arr[0].x
-	var right = arr[0].x
-	for v in arr:
-		top = min(v.y, top)
-		left = min(v.x, left)
-		right = max(v.x, right)
-
-	var k = 1.0
-	if $CollisionShape2D.scale.x < 0:
-		k = 0.5
-	$HealthBar.rect_position = Vector2(
-		(left + right - $HealthBar.rect_size.x * k) * 0.5,
-		top - $HealthBar.rect_size.y * 2.0
-	)
 
 func _set_shape(arr: PoolVector2Array):
 	$CollisionShape2D.polygon = arr
 	$LightOccluder2D.occluder.polygon = arr
-	_relocate_health_bar()
+	$HealthBar.relocate_above_shape($CollisionShape2D.polygon, $CollisionShape2D.scale)
 
 func _flip_shape():
 	if direction.x > 0:
@@ -67,7 +44,7 @@ func _flip_shape():
 	else:
 		$CollisionShape2D.scale.x = -1
 	$LightOccluder2D.scale = $CollisionShape2D.scale
-	_relocate_health_bar()
+	$HealthBar.relocate_above_shape($CollisionShape2D.polygon, $CollisionShape2D.scale)
 
 func _process(delta):
 	var b = $"/root/Player".spot_block

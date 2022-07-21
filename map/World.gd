@@ -1,5 +1,6 @@
 extends TileMap
 
+const entity_slime = preload("res://../entity/Slime.tscn")
 const view_distance = 3
 
 var biome_noise = OpenSimplexNoise.new()
@@ -7,6 +8,7 @@ var area_noise = OpenSimplexNoise.new()
 var force_render = true
 var render_terminated = false
 var loaded_chunks = {}
+var loaded_entities = {}
 
 var biome_scale = 0.2;
 var area_scale = 0.3;
@@ -119,11 +121,26 @@ func load_chunk(chunk_x: int, chunk_y: int):
 	call_deferred("_update_data", chunk_x, chunk_y, data)
 
 func _update_data(chunk_x: int, chunk_y: int, data):
+	var pos = Vector2(chunk_x, chunk_y)
+	loaded_entities[pos] = 0
 	for i in 16:
 		for j in 16:
 			var x = (chunk_x << 4) + i
 			var y = (chunk_y << 4) + j
 			set_cell(x, y, data[i][j].material)
+
+	if loaded_entities[pos] < 3:
+		for k in 3:
+			var i = rand_range(0, 15)
+			var j = rand_range(0, 15)
+			var x = (chunk_x << 4) + i
+			var y = (chunk_y << 4) + j
+			if data[i][j].material == $"/root/Blocks".WALL:
+				continue
+			var ent = entity_slime.instance()
+			ent.position = Vector2(x, y) * 64
+			add_child(ent)
+			loaded_entities[pos] += 1
 	update_bitmask_region()
 
 ##################################################################
